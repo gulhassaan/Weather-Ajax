@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Weather</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 mx-auto mt-5 p-4 " style="box-shadow: 4px 4px 2px 11px  rgb(41, 112, 112) ;">
+                <input type="text" class="form-control" placeholder="Enter City " id='inputdata' required>
+                <button type="button" class="btn btn-warning mt-2 btn-block" onclick="fungetData()">Get Current Weather</button>
+                <div class="text-center mt-4">
+                    <h4>
+                        <span id="city_name"> </span>
+                        <span id="country_name"></span>
+                    </h4>
+                    <div id="icon"> </div>
+                    <p>
+                        <span id="main"></span><br>
+                        <em id="desc"></em><br>
+                        <em id="wind"></em><br>
+                        <div style="color: rgb(240, 173, 78);">
+                            <ins id="temp"></ins>
+                        </div>
+                        <div class="container-fluid text-warning p-0 text-lg-end fs-6 ">By Hassaan Gul </div>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <style>
+
+    </style>
+    <script>
+        function fungetData() {
+
+            var getcity = document.getElementById("inputdata").value;
+
+            $.ajax({
+                url: "https://api.openweathermap.org/data/2.5/weather?q=" + getcity + "&appid=2d1b74f5ad0d95acfc6cf9bf6bdd5687&units=metric",
+                type: "get",
+                success: function(data) {
+                    $("#icon").html("<img src='https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png'>");
+                    $("#city_name").html(data.name)
+                    $("#country_name").html("(" + data.sys.country + ")")
+                    $("#main").html(data.weather[0].main)
+                    $("#desc").html("(" + data.weather[0].description + ")")
+                    $("#temp").html("Temperature : " + data.main.temp + "°c")
+                    $("#wind").html("Wind speed : " + data.wind.speed)
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
